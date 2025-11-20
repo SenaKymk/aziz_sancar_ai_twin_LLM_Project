@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON = "venv\\Scripts\\python.exe"
+    }
+
     stages {
 
         stage('Checkout') {
@@ -17,35 +21,36 @@ pipeline {
             }
         }
 
-        stage('Install Basic Dependencies') {
+        stage('Install Dependencies') {
             steps {
-                echo "📦 Installing minimal dependencies..."
+                echo "📦 Installing dependencies..."
                 bat """
-                    venv\\Scripts\\python.exe -m pip install --upgrade pip
-                    venv\\Scripts\\python.exe -m pip install python-dotenv requests
+                    ${PYTHON} -m pip install --upgrade pip
+                    ${PYTHON} -m pip install python-dotenv requests mlflow
                 """
             }
         }
 
-        stage('Run Basic Test Script') {
+        stage('Run MLSecOps Suite') {
             steps {
-                echo "🚀 Running simple script..."
+                echo "🔐 Running Security Checks (MLSecOps + OWASP)..."
                 bat """
-                    venv\\Scripts\\python.exe tools\\test_run.py
+                    ${PYTHON} security\\run_security_checks.py
                 """
             }
         }
 
-        stage('Archive Artifacts') {
+        stage('Archive Security Logs') {
             steps {
-                archiveArtifacts artifacts: '**/*.log', allowEmptyArchive: true
+                echo "📁 Archiving generated logs..."
+                archiveArtifacts artifacts: 'security_logs/*.json', allowEmptyArchive: true
             }
         }
     }
 
     post {
         success {
-            echo "🎉 Pipeline SUCCESS!"
+            echo "🎉 Security Pipeline SUCCESS!"
         }
         failure {
             echo "❌ Pipeline Failed!"
