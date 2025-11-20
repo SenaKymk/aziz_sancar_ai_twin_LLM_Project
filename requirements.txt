@@ -8,6 +8,8 @@ numpy
 pandas
 torch
 dvc
-langchain
-langchain-core
-langchain-community
+
+# Eski langchain sürümleri
+langchain==0.1.14
+langchain-core==0.1.30
+langchain-community==0.0.27
