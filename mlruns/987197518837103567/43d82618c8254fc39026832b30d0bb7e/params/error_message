@@ -1,0 +1,1 @@
+An error occurred (ValidationException) when calling the CreateTrainingJob operation: 1 validation error detected: Value 'aws:iam::312506040229:user/zenml-user' at 'roleArn' failed to satisfy constraint: Member must satisfy regular expression pattern: arn:aws[a-z\-]*:iam::\d{12}:role/?[a-zA-Z_0-9+=,.@\-_/]+

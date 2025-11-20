@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/656419400801368620/94444ab3d0c540cd8c3607c759752fea/artifacts
+end_time: 1761852809693
+entry_point_name: ''
+experiment_id: '656419400801368620'
+lifecycle_stage: active
+run_id: 94444ab3d0c540cd8c3607c759752fea
+run_name: omniscient-doe-113
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761852806822
+status: 3
+tags: []
+user_id: hsena
