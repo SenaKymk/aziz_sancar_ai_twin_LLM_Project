@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/764791109902934250/b14454d395a747b2908b85aa191e50a9/artifacts
+end_time: 1763676154989
+entry_point_name: ''
+experiment_id: '764791109902934250'
+lifecycle_stage: active
+run_id: b14454d395a747b2908b85aa191e50a9
+run_name: security_scan
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763676152345
+status: 3
+tags: []
+user_id: hsena

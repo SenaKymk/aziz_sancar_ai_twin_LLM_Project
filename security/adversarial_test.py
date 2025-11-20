@@ -15,6 +15,8 @@
 
 import mlflow
 import openai
+import os
+
 
 # Ortam değişkeninden API al
 openai.api_key = os.getenv("OPENAI_API_KEY")
