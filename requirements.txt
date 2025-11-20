@@ -11,5 +11,5 @@ dvc
 
 # ✔ LangChain eski sürüm — globals destekli
 langchain==0.0.350
-langchain-core==0.0.10
+langchain-core==0.1.30
 langchain-community==0.0.27
