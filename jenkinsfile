@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Pulling code from GitHub...'
+                checkout scm
+            }
+        }
+
+        stage('Install') {
+            steps {
+                echo 'Installing dependencies...'
+                sh """python3 --version"""
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Running build step...'
+            }
+        }
+
+        stage('RAG Pipeline') {
+            steps {
+                echo 'Executing AI Twin RAG pipeline...'
+            }
+        }
+    }
+}
