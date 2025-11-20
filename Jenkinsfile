@@ -33,15 +33,6 @@ pipeline {
             }
         }
 
-        stage('Load Environment Variables') {
-            steps {
-                echo "🔐 Loading .env file..."
-                bat """
-                    type .env
-                """
-            }
-        }
-
         stage('Run RAG Pipeline') {
             steps {
                 echo "📚 Running RAG system..."
