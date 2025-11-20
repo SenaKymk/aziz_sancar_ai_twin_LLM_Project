@@ -11,50 +11,49 @@ pipeline {
 
         stage('Setup Python Environment') {
             steps {
-                sh '''
-                python3 -m venv venv
-                . venv/bin/activate
+                bat '''
+                python -m venv venv
+                call venv\\Scripts\\activate
                 pip install --upgrade pip
-                pip install -r requirements.txt
+                pip install -r requirements.txt || echo "requirements not found, skipping"
                 '''
             }
         }
 
         stage('Run Security Tests') {
             steps {
-                sh '''
-                . venv/bin/activate
-                python security/run_security_checks.py
+                bat '''
+                call venv\\Scripts\\activate
+                python security\\run_security_checks.py
                 '''
             }
         }
 
         stage('Archive Security Report') {
             steps {
-                archiveArtifacts artifacts: 'security_reports/security_report.json', fingerprint: true
+                archiveArtifacts artifacts: 'security_reports\\security_report.json', fingerprint: true
             }
         }
 
         stage('Enforce Security Gate') {
             steps {
                 script {
-
                     def report = readJSON file: 'security_reports/security_report.json'
-                    def failedTests = report.summary.failed
-                    def riskLevel = report.summary.risk_level
+                    def failed = report.summary.failed
+                    def risk = report.summary.risk_level
 
-                    echo "Failed Tests : ${failedTests}"
-                    echo "Risk Level   : ${riskLevel}"
+                    echo "FAILED TESTS: ${failed}"
+                    echo "RISK LEVEL : ${risk}"
 
-                    if (failedTests > 0) {
-                        error("❌ Security tests FAILED. Blocking deployment.")
+                    if (failed > 0) {
+                        error("❌ Security tests failed — build blocked.")
                     }
 
-                    if (riskLevel == "HIGH") {
-                        error("❌ Model Risk Level = HIGH → build blocked.")
+                    if (risk == "HIGH") {
+                        error("❌ High risk level — build blocked.")
                     }
 
-                    echo "✔ Security tests passed. Proceeding."
+                    echo "✔ Security checks passed."
                 }
             }
         }
