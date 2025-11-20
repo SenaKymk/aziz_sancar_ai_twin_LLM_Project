@@ -8,3 +8,6 @@ numpy
 pandas
 torch
 dvc
+langchain
+langchain-core
+langchain-community
