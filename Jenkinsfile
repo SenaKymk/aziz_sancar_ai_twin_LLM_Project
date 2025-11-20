@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON = "${WORKSPACE}\\venv\\Scripts\\python.exe"
-    }
-
     stages {
 
         stage('Checkout') {
@@ -16,37 +12,26 @@ pipeline {
 
         stage('Setup Python venv') {
             steps {
-                echo "🐍 Creating virtual environment (Windows)..."
+                echo "🐍 Creating virtual environment..."
+                bat "python -m venv venv"
+            }
+        }
+
+        stage('Install Basic Dependencies') {
+            steps {
+                echo "📦 Installing minimal dependencies..."
                 bat """
-                    python -m venv venv
+                    venv\\Scripts\\python.exe -m pip install --upgrade pip
+                    venv\\Scripts\\python.exe -m pip install python-dotenv requests
                 """
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Run Basic Test Script') {
             steps {
-                echo "📦 Installing dependencies..."
+                echo "🚀 Running simple script..."
                 bat """
-                    ${PYTHON} -m pip install --upgrade pip
-                    ${PYTHON} -m pip install -r requirements.txt
-                """
-            }
-        }
-
-        stage('Run RAG Pipeline') {
-            steps {
-                echo "📚 Running RAG system..."
-                bat """
-                    ${PYTHON} tools\\rag.py
-                """
-            }
-        }
-
-        stage('Run ML Service') {
-            steps {
-                echo "🤖 Running ML Service..."
-                bat """
-                    ${PYTHON} tools\\ml_service.py
+                    venv\\Scripts\\python.exe tools\\test_run.py
                 """
             }
         }
@@ -59,11 +44,11 @@ pipeline {
     }
 
     post {
-        failure {
-            echo "❌ Pipeline failed!"
-        }
         success {
-            echo "🎉 Pipeline executed successfully!"
+            echo "🎉 Pipeline SUCCESS!"
+        }
+        failure {
+            echo "❌ Pipeline Failed!"
         }
     }
 }
