@@ -9,7 +9,7 @@ pandas
 torch
 dvc
 
-# Eski langchain sürümleri
-langchain==0.1.14
-langchain-core==0.1.30
+# ✔ LangChain eski sürüm — globals destekli
+langchain==0.0.350
+langchain-core==0.0.10
 langchain-community==0.0.27
